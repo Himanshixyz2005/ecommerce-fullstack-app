@@ -172,7 +172,7 @@ export default function ProfileScreen () {
     <View style={styles.container}>
       <FlatList
         data={orders}
-        keyExtractor={item => item._id || Math.random().toString()}
+        keyExtractor={(item, index) => item._id || `order-${index}`}
         renderItem={renderOrder}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listContent}
