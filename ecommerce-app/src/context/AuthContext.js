@@ -2,45 +2,65 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createContext, useEffect, useState } from 'react'
 import API from '../services/api'
 
-export const AuthContext = createContext()
+export const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // Check for saved user session on app launch
   useEffect(() => {
     const loadStorageData = async () => {
       try {
-        const storedToken = await AsyncStorage.getItem('token')
-        const storedUser = await AsyncStorage.getItem('user')
+        const [storedToken, storedUser] = await Promise.all([
+          AsyncStorage.getItem('token'),
+          AsyncStorage.getItem('user')
+        ])
+
         if (storedToken && storedUser) {
           setToken(storedToken)
           setUser(JSON.parse(storedUser))
         }
       } catch (error) {
-        console.error('Failed to load storage data', error)
+        console.error('Failed to restore session:', error)
+        await AsyncStorage.multiRemove(['token', 'user'])
       } finally {
         setLoading(false)
       }
     }
+
     loadStorageData()
   }, [])
 
+  const saveSession = async (authToken, userData) => {
+    setToken(authToken)
+    setUser(userData)
+
+    await AsyncStorage.multiSet([
+      ['token', authToken],
+      ['user', JSON.stringify(userData)]
+    ])
+  }
+
   const login = async (email, password) => {
     try {
-      const response = await API.post('/auth/login', { email, password })
-      const { token, ...userData } = response.data
-      setToken(token)
-      setUser(userData)
-      await AsyncStorage.setItem('token', token)
-      await AsyncStorage.setItem('user', JSON.stringify(userData))
-      return { success: true }
+      const response = await API.post('/auth/login', {
+        email,
+        password
+      })
+
+      const { token: authToken, ...userData } = response.data
+
+      await saveSession(authToken, userData)
+
+      return {
+        success: true
+      }
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || 'Login failed'
+        message:
+          error.response?.data?.message || 'Unable to login. Please try again.'
       }
     }
   }
@@ -52,30 +72,43 @@ export const AuthProvider = ({ children }) => {
         email,
         password
       })
-      const { token, ...userData } = response.data
-      setToken(token)
-      setUser(userData)
-      await AsyncStorage.setItem('token', token)
-      await AsyncStorage.setItem('user', JSON.stringify(userData))
-      return { success: true }
+
+      const { token: authToken, ...userData } = response.data
+
+      await saveSession(authToken, userData)
+
+      return {
+        success: true
+      }
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || 'Registration failed'
+        message:
+          error.response?.data?.message ||
+          'Unable to create your account. Please try again.'
       }
     }
   }
 
   const logout = async () => {
-    setToken(null)
-    setUser(null)
-    await AsyncStorage.removeItem('token')
-    await AsyncStorage.removeItem('user')
+    try {
+      await AsyncStorage.multiRemove(['token', 'user'])
+    } finally {
+      setToken(null)
+      setUser(null)
+    }
   }
 
   return (
     <AuthContext.Provider
-      value={{ user, token, login, register, logout, loading }}
+      value={{
+        user,
+        token,
+        login,
+        register,
+        logout,
+        loading
+      }}
     >
       {children}
     </AuthContext.Provider>

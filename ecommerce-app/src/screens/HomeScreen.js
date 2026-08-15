@@ -441,8 +441,10 @@ export default function HomeScreen ({ navigation }) {
 
                 <Text style={styles.sectionTitle}>Featured products</Text>
               </View>
-
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ProductListing')}
+                activeOpacity={0.7}
+              >
                 <Text style={styles.sectionLink}>See all</Text>
               </TouchableOpacity>
             </View>
