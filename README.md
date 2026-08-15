@@ -1,44 +1,44 @@
 🛍️ Full-Stack E-Commerce Mobile App
 
 <p align="center">
-  <strong>A modern, premium e-commerce mobile experience built with React Native, Expo, Node.js, Express and MongoDB.</strong>
+  <strong>A modern, premium e-commerce mobile experience built with React Native, Expo, Node.js, Express and MongoDB.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/React%20Native-0.86-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React Native" />
-  <img src="https://img.shields.io/badge/Expo-57-000020?style=for-the-badge&logo=expo&logoColor=white" alt="Expo" />
-  <img src="https://img.shields.io/badge/Node.js-Backend-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
-  <img src="https://img.shields.io/badge/Express.js-API-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js" />
-  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
-  <img src="https://img.shields.io/badge/JWT-Authentication-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT" />
+  <img src="https://img.shields.io/badge/React%20Native-0.86-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="React Native" />
+  <img src="https://img.shields.io/badge/Expo-57-000020?style=for-the-badge&logo=expo&logoColor=white" alt="Expo" />
+  <img src="https://img.shields.io/badge/Node.js-Backend-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Express.js-API-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js" />
+  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+  <img src="https://img.shields.io/badge/JWT-Authentication-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT" />
 </p>
 
 ✨ Overview
 
-LuxeCart is a full-stack e-commerce mobile application created for a 24-hour application development challenge.
+A full-stack e-commerce mobile application created for a 24-hour application development challenge.
 
 The project focuses on a smooth shopping journey from authentication to product discovery, cart management, checkout and order history, while maintaining a clean and premium visual language.
 
 Core flow
 
 Splash
-  ↓
+  ↓
 Login / Signup
-  ↓
+  ↓
 Home
-  ↓
+  ↓
 Shop → Search / Filter / Sort
-  ↓
+  ↓
 Product Details
-  ↓
+  ↓
 Add to Cart
-  ↓
+  ↓
 Cart
-  ↓
+  ↓
 Checkout
-  ↓
+  ↓
 Order Placement
-  ↓
+  ↓
 Profile → Order History
 
 🚀 Highlights
@@ -234,24 +234,24 @@ Development server
 🏗️ Architecture
 
 ┌───────────────────────────────────────────────┐
-│              React Native / Expo              │
-│                                               │
-│  Screens → Navigation → AuthContext → Axios  │
+│              React Native / Expo              │
+│                                               │
+│  Screens → Navigation → AuthContext → Axios  │
 └──────────────────────┬────────────────────────┘
-                       │ REST API
-                       │ JWT Bearer Token
-                       ▼
+                       │ REST API
+                       │ JWT Bearer Token
+                       ▼
 ┌───────────────────────────────────────────────┐
-│             Node.js + Express API             │
-│                                               │
-│ Routes → Middleware → Controllers → Models   │
+│             Node.js + Express API             │
+│                                               │
+│ Routes → Middleware → Controllers → Models   │
 └──────────────────────┬────────────────────────┘
-                       │ Mongoose
-                       ▼
+                       │ Mongoose
+                       ▼
 ┌───────────────────────────────────────────────┐
-│                    MongoDB                    │
-│                                               │
-│ Users • Products • Carts • Orders             │
+│                    MongoDB                    │
+│                                               │
+│ Users • Products • Carts • Orders             │
 └───────────────────────────────────────────────┘
 
 📁 Project Structure
@@ -259,56 +259,56 @@ Development server
 ecommerce-fullstack-app/
 │
 ├── ecommerce-app/
-│   ├── assets/
-│   ├── components/
-│   ├── constants/
-│   ├── src/
-│   │   ├── context/
-│   │   │   └── AuthContext.js
-│   │   ├── navigation/
-│   │   │   └── AppNavigator.js
-│   │   ├── screens/
-│   │   │   ├── SplashScreen.js
-│   │   │   ├── LoginScreen.js
-│   │   │   ├── SignupScreen.js
-│   │   │   ├── ForgotPasswordScreen.js
-│   │   │   ├── ResetPasswordScreen.js
-│   │   │   ├── HomeScreen.js
-│   │   │   ├── ProductListingScreen.js
-│   │   │   ├── ProductDetailScreen.js
-│   │   │   ├── CartScreen.js
-│   │   │   ├── CheckoutScreen.js
-│   │   │   └── ProfileScreen.js
-│   │   └── services/
-│   │       └── api.js
-│   ├── App.js
-│   ├── app.json
-│   └── package.json
+│   ├── assets/
+│   ├── components/
+│   ├── constants/
+│   ├── src/
+│   │   ├── context/
+│   │   │   └── AuthContext.js
+│   │   ├── navigation/
+│   │   │   └── AppNavigator.js
+│   │   ├── screens/
+│   │   │   ├── SplashScreen.js
+│   │   │   ├── LoginScreen.js
+│   │   │   ├── SignupScreen.js
+│   │   │   ├── ForgotPasswordScreen.js
+│   │   │   ├── ResetPasswordScreen.js
+│   │   │   ├── HomeScreen.js
+│   │   │   ├── ProductListingScreen.js
+│   │   │   ├── ProductDetailScreen.js
+│   │   │   ├── CartScreen.js
+│   │   │   ├── CheckoutScreen.js
+│   │   │   └── ProfileScreen.js
+│   │   └── services/
+│   │       └── api.js
+│   ├── App.js
+│   ├── app.json
+│   └── package.json
 │
 ├── ecommerce-backend/
-│   ├── src/
-│   │   ├── config/
-│   │   │   └── db.js
-│   │   ├── controllers/
-│   │   │   ├── authController.js
-│   │   │   ├── cartController.js
-│   │   │   ├── orderController.js
-│   │   │   └── productController.js
-│   │   ├── middleware/
-│   │   │   └── authMiddleware.js
-│   │   ├── models/
-│   │   │   ├── User.js
-│   │   │   ├── Product.js
-│   │   │   ├── Cart.js
-│   │   │   └── Order.js
-│   │   ├── routes/
-│   │   │   ├── authRoutes.js
-│   │   │   ├── productRoutes.js
-│   │   │   ├── cartRoutes.js
-│   │   │   └── orderRoutes.js
-│   │   └── server.js
-│   ├── seeder.js
-│   └── package.json
+│   ├── src/
+│   │   ├── config/
+│   │   │   └── db.js
+│   │   ├── controllers/
+│   │   │   ├── authController.js
+│   │   │   ├── cartController.js
+│   │   │   ├── orderController.js
+│   │   │   └── productController.js
+│   │   ├── middleware/
+│   │   │   └── authMiddleware.js
+│   │   ├── models/
+│   │   │   ├── User.js
+│   │   │   ├── Product.js
+│   │   │   ├── Cart.js
+│   │   │   └── Order.js
+│   │   ├── routes/
+│   │   │   ├── authRoutes.js
+│   │   │   ├── productRoutes.js
+│   │   │   ├── cartRoutes.js
+│   │   │   └── orderRoutes.js
+│   │   └── server.js
+│   ├── seeder.js
+│   └── package.json
 │
 └── README.md
 
@@ -529,18 +529,58 @@ JWT
 
 Place a new order
 
+📸 Screenshots
+
+The screenshots below showcase the main customer journey and premium UI of the application.
+
+🏠 Home
+
+<p align="center">
+  <img src="./screenshots/home.png" width="320" alt="Home Screen" />
+</p>
+
+🛍️ Product Discovery
+
+<p align="center">
+  <img src="./screenshots/shop.png" width="320" alt="Product Listing Screen" />
+</p>
+
+📦 Product Details
+
+<p align="center">
+  <img src="./screenshots/product-details.png" width="320" alt="Product Details Screen" />
+</p>
+
+🛒 Cart
+
+<p align="center">
+  <img src="./screenshots/cart.png" width="320" alt="Cart Screen" />
+</p>
+
+💳 Checkout
+
+<p align="center">
+  <img src="./screenshots/checkout.png" width="320" alt="Checkout Screen" />
+</p>
+
+👤 Profile & Order History
+
+<p align="center">
+  <img src="./screenshots/profile.png" width="320" alt="Profile and Order History Screen" />
+</p>
+
 🔐 Authentication Flow
 
 Register / Login
-       ↓
-      JWT
-       ↓
+       ↓
+      JWT
+       ↓
 AsyncStorage
-       ↓
+       ↓
 Axios Interceptor
-       ↓
+       ↓
 Authorization: Bearer <token>
-       ↓
+       ↓
 Protected Express Routes
 
 Authentication state is restored when the application launches, allowing users to remain logged in across app sessions.
@@ -621,14 +661,14 @@ Account and order history
 
 The interface follows a consistent premium shopping aesthetic.
 
-Primary Purple   #7C3AED
-Background       #F4F3FF
-Card             #FFFFFF
-Primary Text     #111827
-Secondary Text   #64748B
-Border           #E2E8F0
-Success          #16A34A
-Error            #DC2626
+Primary Purple   #7C3AED
+Background       #F4F3FF
+Card             #FFFFFF
+Primary Text     #111827
+Secondary Text   #64748B
+Border           #E2E8F0
+Success          #16A34A
+Error            #DC2626
 
 Design principles:
 
@@ -920,5 +960,5 @@ https://github.com/Himanshixyz2005
 Feel free to explore the repository, review the architecture and try the application locally.
 
 <p align="center">
-  Built with ❤️ using React Native, Expo, Node.js, Express & MongoDB
+  Built with ❤️ using React Native, Expo, Node.js, Express & MongoDB
 </p>
