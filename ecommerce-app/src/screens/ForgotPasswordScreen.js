@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+  ActivityIndicator,
   Alert,
   StyleSheet,
   Text,
@@ -8,28 +9,69 @@ import {
   View
 } from 'react-native'
 
+import API from '../services/api'
+
 export default function ForgotPasswordScreen ({ navigation }) {
   const [email, setEmail] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleReset = () => {
-    if (!email.trim()) {
+  const handleReset = async () => {
+    const cleanEmail = email.trim().toLowerCase()
+
+    if (!cleanEmail) {
       Alert.alert('Missing email', 'Please enter your email address.')
       return
     }
 
-    Alert.alert(
-      'Link sent',
-      'Password reset instructions have been sent to your email.'
-    )
-    navigation.navigate('Login')
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!emailRegex.test(cleanEmail)) {
+      Alert.alert('Invalid email', 'Please enter a valid email address.')
+      return
+    }
+
+    try {
+      setLoading(true)
+
+      const response = await API.post('/auth/forgot-password', {
+        email: cleanEmail
+      })
+
+      const resetToken = response.data?.resetToken
+
+      // Demo mode:
+      // The backend returns the token when NODE_ENV is not production.
+      if (resetToken) {
+        navigation.navigate('ResetPassword', {
+          token: resetToken,
+          email: cleanEmail
+        })
+        return
+      }
+
+      Alert.alert(
+        'Check your email',
+        'If an account exists with this email, password reset instructions have been generated.'
+      )
+    } catch (error) {
+      Alert.alert(
+        'Reset failed',
+        error.response?.data?.message ||
+          'Unable to process your request. Please try again.'
+      )
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.eyebrow}>Reset password</Text>
+
       <Text style={styles.title}>Forgot your password?</Text>
+
       <Text style={styles.subtitle}>
-        We will send a reset link to your email so you can get back in.
+        Enter your registered email address to continue with password reset.
       </Text>
 
       <View style={styles.card}>
@@ -40,14 +82,26 @@ export default function ForgotPasswordScreen ({ navigation }) {
           value={email}
           onChangeText={setEmail}
           autoCapitalize='none'
+          autoCorrect={false}
           keyboardType='email-address'
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleReset}>
-          <Text style={styles.buttonText}>Send reset link</Text>
+        <TouchableOpacity
+          style={[styles.button, loading && styles.buttonDisabled]}
+          onPress={handleReset}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color='#fff' />
+          ) : (
+            <Text style={styles.buttonText}>Continue</Text>
+          )}
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          disabled={loading}
+        >
           <Text style={styles.backText}>Back to login</Text>
         </TouchableOpacity>
       </View>
@@ -62,6 +116,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     backgroundColor: '#f8fafc'
   },
+
   eyebrow: {
     color: '#4f46e5',
     fontWeight: '700',
@@ -70,27 +125,37 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     textTransform: 'uppercase'
   },
+
   title: {
     fontSize: 30,
     fontWeight: '800',
     color: '#0f172a',
     marginBottom: 8
   },
+
   subtitle: {
     fontSize: 15,
     color: '#64748b',
     lineHeight: 22,
     marginBottom: 24
   },
+
   card: {
     backgroundColor: '#fff',
     borderRadius: 24,
     padding: 24,
     borderWidth: 1,
     borderColor: '#f1f5f9',
-    boxShadow: '0px 8px 24px rgba(15, 23, 42, 0.06)',
+    shadowColor: '#0f172a',
+    shadowOffset: {
+      width: 0,
+      height: 8
+    },
+    shadowOpacity: 0.06,
+    shadowRadius: 24,
     elevation: 6
   },
+
   input: {
     width: '100%',
     backgroundColor: '#f8fafc',
@@ -103,20 +168,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#0f172a'
   },
+
   button: {
     backgroundColor: '#4f46e5',
     borderRadius: 14,
     paddingVertical: 16,
     alignItems: 'center',
     marginBottom: 16,
-    boxShadow: '0px 4px 12px rgba(79, 70, 229, 0.25)',
     elevation: 3
   },
+
+  buttonDisabled: {
+    opacity: 0.7
+  },
+
   buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '700'
   },
+
   backText: {
     color: '#4f46e5',
     fontWeight: '700',
